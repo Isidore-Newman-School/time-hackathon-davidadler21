@@ -4,14 +4,15 @@ int h = hour();    // Values from 0 - 23
 int count;
 int count2;
 int rate;
+int index = 0;
 boolean death = true;
 boolean displayRate = false;
 boolean pulseTime = false;
-int index = 1;
 PImage bookShelf;
 PImage hourglass;
 PImage clock;
 PImage surgery; 
+Clock shelfClock;
 
 void setup () {
   size(500, 500);
@@ -19,6 +20,7 @@ void setup () {
   hourglass = loadImage("Hourglass.png");
   clock = loadImage("Clock.png");
   surgery = loadImage("Surgery.png");
+  shelfClock = new Clock(290, 110);
 }
 
 void draw() {
@@ -26,8 +28,7 @@ void draw() {
   timeKeep();
   image(bookShelf, -75, 200, 700, 350);
   hourglasses();
-  clockTime();
-  clockQuestions();
+  shelfClock.display();
   demon();
   pulsometer();
   heartRate();
@@ -57,37 +58,6 @@ void hourglasses() {
     rect(125 + 95*x, 377 - timeFactor[x]*time[x], 35, 5 + timeFactor[x]*time[x]);
     image(hourglass, 95*x +95, 310, 150, 110);
     rect(144 + 95*x, 355, 1, 23);
-  }
-}
-
-void clockTime() {
-  fill(0);
-  image(clock, 290, 110, 200, 200);
-  int[] time;
-  time = new int[2];
-  time[0] = s;
-  time[1] = m;
-  for (int x = 0; x < 2; x++) {
-    pushMatrix();
-    translate(374, 198);
-    rotate(radians(6*time[x]));
-    rect(0, 0, 2, 40 + 10*x);
-    popMatrix();
-  }
-}
-
-void clockQuestions() {
-  String[] speech = {"Why can't I move? \nWhy? Oh! Why?", "What's the worst \nthing about Canada? \nCanadoans!", "Did you know \nI engineered human \ncentipede?"};
-  if (s < 45) {
-    index = int(random(speech.length));
-  }
-  else {
-    textSize(12);
-    fill(255);
-    rect(140, 80, 150, 80);
-    triangle(260, 160, 288, 120, 316, 175);
-    fill(0);
-    text(speech[index], 150, 100);
   }
 }
 
